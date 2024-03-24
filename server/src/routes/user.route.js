@@ -1,7 +1,17 @@
 import { Router } from "express";
+import { upload } from "../middlewares/multer.middleware.js";
+import { registerUser } from "../controllers/user.controller.js";
 
-userRouter = Router();
+const userRouter = Router();
 
-//userRouter.get("/user");
+userRouter.route("/register-user").post(
+  upload.fields([
+    {
+      name: "profilePicture",
+      maxCount: 1,
+    },
+  ]),
+  registerUser
+);
 
 export default userRouter;

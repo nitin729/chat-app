@@ -19,7 +19,7 @@ app.use(express.json({ limit: "16kB", extended: true }));
 app.use(express.static("public"));
 
 //Routes
-import userRouter from "routes/user.route.js";
+import userRouter from "./routes/user.route.js";
 
 //route declaration
 app.use("/api/v1/users", userRouter);

@@ -2,11 +2,12 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     fullName: {
       type: String,
       required: true,
+      unique: true,
     },
     userName: {
       type: String,
@@ -22,6 +23,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
     },
+    confirmPassword: {
+      type: String,
+      required: [true, "Password is required"],
+    },
 
     profilePicture: {
       type: String,
@@ -29,14 +34,14 @@ const userSchema = mongoose.Schema(
     groups: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: Group,
+        ref: "Group",
       },
     ],
     refreshToken: {
       type: String,
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 //Encrypting the password before saving in database
@@ -80,4 +85,4 @@ userSchema.methods.generateRefreshToken = () => {
   );
 };
 
-export default User = new mongoose.model("User", userSchema);
+export const User = mongoose.model("User", userSchema);

@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
-import ApiError from "./apiError";
+import ApiError from "./apiError.js";
 import fs from "fs";
 
 cloudinary.config({
@@ -8,7 +8,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const uploadOnCloudinary = async () => {
+const uploadOnCloudinary = async (localFilePath) => {
   try {
     if (!localFilePath) throw new ApiError(503, "Local File Path not found");
     const response = cloudinary.uploader.upload(localFilePath, {
