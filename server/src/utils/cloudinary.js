@@ -10,19 +10,20 @@ cloudinary.config({
 
 const uploadOnCloudinary = async (localFilePath) => {
   try {
-    if (!localFilePath) throw new ApiError(503, "Local File Path not found");
-    const response = cloudinary.uploader.upload(localFilePath, {
+    if (!localFilePath) return null;
+    //upload file on cloudinary
+    const response = await cloudinary.uploader.upload(localFilePath, {
       folder: "chat-users",
-      resource_type: auto,
+      resource_type: "auto",
     });
-    if (!response) {
-      throw new ApiError(502, "Did not recieve any response from cloudinary");
-    }
+    // file has been uploaded successfully
+    // console.log("response for file upload", response);
     fs.unlinkSync(localFilePath);
     return response;
   } catch (error) {
+    // remove the locally saved temp file as the upload failed
     fs.unlinkSync(localFilePath);
-    throw new ApiError(500, "Error uploading on cloudinary", error);
+    return null;
   }
 };
 

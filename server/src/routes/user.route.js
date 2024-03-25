@@ -4,14 +4,8 @@ import { registerUser } from "../controllers/user.controller.js";
 
 const userRouter = Router();
 
-userRouter.route("/register-user").post(
-  upload.fields([
-    {
-      name: "profilePicture",
-      maxCount: 1,
-    },
-  ]),
-  registerUser
-);
+userRouter
+  .route("/register-user")
+  .post(upload.single("profilePicture"), registerUser);
 
 export default userRouter;

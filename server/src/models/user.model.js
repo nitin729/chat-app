@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema(
     },
     confirmPassword: {
       type: String,
-      required: [true, "Password is required"],
     },
 
     profilePicture: {
@@ -46,9 +45,9 @@ const userSchema = new mongoose.Schema(
 
 //Encrypting the password before saving in database
 
-userSchema.pre("save", async (next) => {
+userSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
-    this.password = bcrypt.hash(this.password, 10);
+    this.password = await bcrypt.hash(this.password, 10);
     next();
   }
 });
