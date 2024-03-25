@@ -15,7 +15,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Passwords do not match");
   }
   console.log("in Password");
-  const existingUser = await User.findOne({ email });
+  const existingUser = await User.find({ email });
   console.log("existingUser");
 
   if (existingUser) {
